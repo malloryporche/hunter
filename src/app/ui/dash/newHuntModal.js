@@ -1,9 +1,9 @@
-import { Fragment, useRef, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { Fragment, useRef, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import PlacesAutoComplete from './places-auto-complete.js';
+
 
 export default function Modal({ isModalOpen, setModalOpen }) {
-
 
   const cancelButtonRef = useRef(null)
 
@@ -36,18 +36,27 @@ export default function Modal({ isModalOpen, setModalOpen }) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                    </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Deactivate account
+                        Create A New Hunt
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All of your data will be permanently
-                          removed. This action cannot be undone.
-                        </p>
+                        <form>
+                        <div>
+                          <label for="place" class="block text-sm font-medium leading-6 text-gray-900">Name Your Map</label>
+                          <div class="relative mt-2 rounded-md shadow-sm">
+                            <input
+                              type="text"
+                              name="place"
+                              id="place"
+                              class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Create a name for your scavenger hunt."
+                            />
+                          </div>
+                        </div>
+                          <PlacesAutoComplete
+                            title={'What\'s the center of your map?'}
+                            onAddressSelect={'250 S. High Street, Columbus OH 43215'} />
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -55,10 +64,10 @@ export default function Modal({ isModalOpen, setModalOpen }) {
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-900 sm:ml-3 sm:w-auto"
                     onClick={() => setModalOpen(false)}
                   >
-                    Deactivate
+                    Create Hunt
                   </button>
                   <button
                     type="button"

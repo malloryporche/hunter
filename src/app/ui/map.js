@@ -1,16 +1,18 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import React, { useState, useEffect, useMemo } from 'react';
+import { GoogleMap, useJsApiLoader, MarkerF, InfoWindow } from '@react-google-maps/api';
 
 
-function MyMap({ center, containerStyle }) {
+function Map({ center, containerStyle }) {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState('');
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCgORHSTeDJOev0dNRaoHKMAoaKnkQc5Ns"
+    googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
+    libraries: ['places']
   });
 
   useEffect(() => {
@@ -48,10 +50,9 @@ function MyMap({ center, containerStyle }) {
         center={center}
         zoom={15}
       >
-      <Marker
-        // onClick={onMarkerClick}
+      <MarkerF
         name={'Current location'}
-        position={{ lat: -34.397, lng: 150.644 }}
+        position={center}
       />
         <></>
       </GoogleMap>
@@ -62,7 +63,4 @@ function MyMap({ center, containerStyle }) {
   )
 }
 
-export default React.memo(MyMap)
-// export default GoogleApiWrapper({
-//   apiKey: "AIzaSyCgORHSTeDJOev0dNRaoHKMAoaKnkQc5Ns"
-// })(Map);
+export default React.memo(Map)

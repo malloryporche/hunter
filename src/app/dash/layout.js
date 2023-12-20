@@ -1,4 +1,4 @@
-import SideNav from '@/app/ui/dash/sidenav.js';
+import SideNav from '../../app/ui/dash/side-nav.js';
 
 export default function Layout({ children }) {
   return (
