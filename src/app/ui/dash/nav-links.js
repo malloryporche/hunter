@@ -3,7 +3,8 @@
 import {
   UserGroupIcon,
   HomeIcon,
-  DocumentDuplicateIcon,
+  MapIcon,
+  TrophyIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -12,10 +13,11 @@ import clsx from 'clsx';
 const links = [
   { name: 'Home', href: '/dash', icon: HomeIcon },
   {
-    name: 'Maps',
-    href: '/dash/maps',
-    icon: DocumentDuplicateIcon,
-  }
+    name: 'Hunts',
+    href: '/dash/hunts',
+    icon: MapIcon,
+  },
+  { name: 'Leaderboards', href: '/dash/leaderboards', icon: TrophyIcon}
 ];
 
 export default function NavLinks() {
@@ -29,9 +31,9 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-indigo-700 hover:text-white hover:font-bold md:flex-none md:justify-start md:p-2 md:px-3',
               {
-                'bg-sky-100 text-blue-600': pathname === link.href,
+                'bg-indigo-700 text-white': pathname === link.href,
               },
             )}>
             <LinkIcon className="w-6" />
