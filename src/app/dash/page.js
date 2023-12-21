@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Modal from '../ui/dash/newHuntModal.js';
 import Map from '../ui/map.js';
-import { createHunt } from '../lib/mapModels.js';
+import { SessionProvider } from 'next-auth';
+
 
 const center = {
   lat: 34.0549,
@@ -39,6 +40,7 @@ export default function Page() {
 
   return (
     <section>
+      <SessionProvider session={session}>
       <h1>Dashboard Home</h1>
       <form onSubmit={(e) => {
         e.preventDefault();
@@ -59,6 +61,7 @@ export default function Page() {
           center={center}
           containerStyle={containerStyle}
       />
+      </SessionProvider>
     </section>
   )
 }
