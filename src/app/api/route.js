@@ -1,6 +1,6 @@
 'use server'
 
-import { createHunt } from '../../../db/mapModels.js';
+import { createHunt } from '../lib/mapModels.js';
 import { dbConnection, getDB } from '../lib/db.js';
 
 export default async function handler(req, res) {
