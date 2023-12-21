@@ -1,7 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.DB_URI || "mongodb+srv://mallory:BiC2DxvemSuNdnfw@cluster0.zfn6hwe.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.DB_URI;
 
-console.log(process.env.DB_URI);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -10,16 +9,28 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-async function run() {
+
+let db;
+
+async function dbConnection() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    db = client.db(process.env.MONGODB_DB);
+
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
-run().catch(console.dir);
+
+dbConnection().catch(console.dir);
+
+function getDB() {
+  return db;
+}
+
+module.exports = { dbConnection, getDB }

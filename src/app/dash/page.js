@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Modal from '../ui/dash/newHuntModal.js';
 import Map from '../ui/map.js';
+import { createHunt } from '../lib/mapModels.js';
 
 const center = {
-  lat: -3.745,
-  lng: -38.523
+  lat: 34.0549,
+  lng: -118.2426
 };
 
 const containerStyle = {
@@ -15,17 +16,24 @@ const containerStyle = {
   height: '600px'
 };
 
-
+const buildHunt = (input) => {
+  const hunt = {
+    name: input.name,
+    owner: input.owner,
+  }
+  createHunt(hunt);
+}
 export default function Page() {
-  const [isModalOpen, setModalOpen] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [markers, setMarker] = useState([]);
 
   const createNewHunt = (mapTitle) => {
     setModalOpen(true);
-    console.log(true);
     const mapData = {
       title: mapTitle,
       description: '',
       center: center,
+      markers: [],
     };
   }
 
@@ -44,6 +52,7 @@ export default function Page() {
       <Modal
         isModalOpen={isModalOpen}
         setModalOpen={setModalOpen}
+        buildHunt={buildHunt}
       />
 
       <Map

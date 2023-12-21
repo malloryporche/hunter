@@ -3,8 +3,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import PlacesAutoComplete from './places-auto-complete.js';
 
 
-export default function Modal({ isModalOpen, setModalOpen }) {
-
+export default function Modal({ isModalOpen, setModalOpen, buildHunt }) {
+  const [hunt, setHuntInfo] = useState({
+    name: '',
+    owner: 123
+  });
   const cancelButtonRef = useRef(null)
 
   return (
@@ -44,18 +47,24 @@ export default function Modal({ isModalOpen, setModalOpen }) {
                         <form>
                         <div>
                           <label for="place" class="block text-sm font-medium leading-6 text-gray-900">Name Your Map</label>
-                          <div class="relative mt-2 rounded-md shadow-sm">
+                          <div className="relative mt-2 rounded-md shadow-sm">
                             <input
                               type="text"
                               name="place"
                               id="place"
-                              class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Create a name for your scavenger hunt."
+                              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Create a name for your scavenger hunt."
+                              onChange={(e) => {
+                                setHuntInfo({
+                                name: e.target.value,
+                                owner: 123
+                              })
+                              }}
                             />
                           </div>
                         </div>
-                          <PlacesAutoComplete
+                          {/* <PlacesAutoComplete
                             title={'What\'s the center of your map?'}
-                            onAddressSelect={'250 S. High Street, Columbus OH 43215'} />
+                            onAddressSelect={'250 S. High Street, Columbus OH 43215'} /> */}
                         </form>
                       </div>
                     </div>
@@ -65,14 +74,17 @@ export default function Modal({ isModalOpen, setModalOpen }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-900 sm:ml-3 sm:w-auto"
-                    onClick={() => setModalOpen(false)}
+                    onClick={(e) => {
+                      buildHunt(hunt);
+                      setModalOpen(false)
+                    }}
                   >
                     Create Hunt
                   </button>
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setModalOpen(false)}
+                    onClick={() => setModalOpen(false) }
                     ref={cancelButtonRef}
                   >
                     Cancel

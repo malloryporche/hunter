@@ -1,11 +1,33 @@
-export async function GET() {
-  const res = await fetch("mongodb+srv://mallory:BiC2DxvemSuNdnfw@cluster0.zfn6hwe.mongodb.net/?retryWrites=true&w=majority", {
-    headers: {
-      'Content-Type': 'application/json',
-      // 'API-Key': process.env.DATA_API_KEY,
-    },
-  })
-  const data = await res.json()
+'use server'
 
-  return Response.json({ data })
+import { createHunt } from '../../../db/mapModels.js';
+import { dbConnection, getDB } from '../lib/db.js';
+
+export default async function handler(req, res) {
+
+  if (req.methd === 'POST') {
+    const {name, owner } = req.body;
+    const newHunt = await createHunt({
+      name: name,
+      owner: owner,
+    });
+
+    console.log(req.body);
+    await dbConnection();
+
+    const collection = getDB().collection('maps');
+
+    try {
+      const result = await collection.insertOne({
+        name: 'Sample Doc',
+        ownerId: 123,
+      });
+      res.status(201).json({success: true, message: 'Document created'})
+      createHunt(req.body);
+    } catch (err) {
+      res.status(500).json({ message: 'Error creating document', error: err.message });
+    }
+  } else {
+    res.status(405).json({ message: 'Method not allowed'});
+  }
 }
